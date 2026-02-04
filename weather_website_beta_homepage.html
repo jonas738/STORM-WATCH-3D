@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StormWatch 3D — U.S. Weather Beta</title>
+  <meta name="description" content="Beta weather platform with live radar, satellite imagery, storm tracking, and safety information." />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b1220;
+      color: #e5e7eb;
+    }
+    header {
+      background: linear-gradient(135deg, #0f172a, #020617);
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin-top: 8px;
+      color: #94a3b8;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: #020617;
+      padding: 10px 0;
+    }
+    nav a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      color: #38bdf8;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 8px;
+      background: #000;
+    }
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #64748b;
+      background: #020617;
+    }
+    .badge {
+      display: inline-block;
+      background: #7c2d12;
+      color: #fde68a;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">BETA VERSION</div>
+  <h1>StormWatch 3D</h1>
+  <p>U.S. live radar, satellite imagery, 3D storm views, and safety information</p>
+  <div style="margin-top:12px;padding:10px;border-radius:8px;background:#7c2d12;color:#fde68a;font-weight:bold;">
+    ⚠️ LIVE ALERTS: Check local NWS warnings & watches for your area
+  </div>
+</header>
+
+<nav>
+  <a href="#radar">Radar</a>
+  <a href="#gps">My Location</a>
+  <a href="#satellite">Satellite</a>
+  <a href="#storms">Storms</a>
+  <a href="#3dcam">3D Cam</a>
+  <a href="#alaska">Alaska</a>
+  <a href="#hawaii">Hawaii</a>
+  <a href="#safety">Safety</a>
+  <a href="#education">Education</a>
+</nav>
+
+<main>
+
+  <section id="radar" class="grid">
+    <div class="card">
+      <h2>Live Doppler Radar (CONUS)</h2>
+      <iframe src="https://radar.weather.gov/" title="NOAA Radar"></iframe>
+      <p>Real-time Doppler radar covering the continental United States.</p>
+    </div>
+  </section>
+
+  <section id="gps" class="grid">
+    <div class="card">
+      <h2>📍 My Location Radar (GPS)</h2>
+      <p>Your local radar loads automatically if location access is allowed.</p>
+      <button onclick="getLocation()" style="padding:10px 16px;border:none;border-radius:8px;background:#38bdf8;color:#020617;font-weight:bold;cursor:pointer;">Reload My Location</button>
+      <div id="gpsResult" style="margin-top:12px;font-size:0.9rem;"></div>
+      <iframe id="gpsRadar" style="display:none;margin-top:12px;height:350px;"></iframe>
+    </div>
+  </section>
+
+  <section id="satellite" class="grid">
+    <div class="card">
+      <h2>Satellite Imagery</h2>
+      <iframe src="https://www.star.nesdis.noaa.gov/GOES/index.php" title="GOES Satellite"></iframe>
+      <p>GOES satellite imagery for cloud cover, storms, and system tracking.</p>
+    </div>
+  </section>
+
+  <section id="storms" class="grid">
+    <div class="card">
+      <h2>Severe Weather Outlook</h2>
+      <iframe src="https://www.spc.noaa.gov/" title="SPC Outlook"></iframe>
+      <p>Storm Prediction Center outlooks for tornadoes, hail, and wind.</p>
+    </div>
+  </section>
+
+  <section id="3dcam" class="grid">
+    <div class="card">
+      <h2>3D Storm Visualization (Beta)</h2>
+      <iframe src="https://weather.cod.edu/satrad/3d.php" title="3D Weather Visualization"></iframe>
+      <p>Interactive 3D-style storm and radar visualization for analyzing storm structure.</p>
+    </div>
+  </section>
+
+  <section id="alaska" class="grid">
+    <div class="card">
+      <h2>Alaska Radar</h2>
+      <iframe src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOiJsb2NhbCIsImNlbnRlciI6Wy02NS4yLC0xNDkuNV0sInpvb20iOjQsInJhZGFyUGFub3MiOnRydWV9" title="Alaska Radar"></iframe>
+      <p>Live radar coverage for Alaska.</p>
+    </div>
+  </section>
+
+  <section id="hawaii" class="grid">
+    <div class="card">
+      <h2>Hawaii Radar</h2>
+      <iframe src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOiJsb2NhbCIsImNlbnRlciI6WzIwLjUsLTE1Ny41XSwienVvbSI6NSwicmFkYXJQYW5vcyI6dHJ1ZX0=" title="Hawaii Radar"></iframe>
+      <p>Live radar coverage for Hawaii.</p>
+    </div>
+  </section>
+
+  <section id="safety" class="grid">
+    <div class="card">
+      <h2>Emergency & Safety</h2>
+      <ul>
+        <li>Know your safe place before storms</li>
+        <li>Have multiple ways to receive warnings</li>
+        <li>Never drive into flooded roads</li>
+        <li>Basic bug-out bag essentials coming soon</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education" class="grid">
+    <div class="card">
+      <h2>Weather Science (Coming Soon)</h2>
+      <p>Learn how Doppler radar works, storm structure, and why tornadoes form — inspired by real meteorology and classic storm science.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Beta Weather Platform • Educational & informational use only</p>
+  <p>Build 1234 • More features, alerts, blog, and forum coming soon</p>
+</footer>
+
+<script>
+function getLocation() {
+  const output = document.getElementById('gpsResult');
+  const radar = document.getElementById('gpsRadar');
+
+  if (!navigator.geolocation) {
+    output.innerHTML = 'Geolocation is not supported by your browser.';
+    return;
+  }
+
+  output.innerHTML = 'Locating…';
+
+  navigator.geolocation.getCurrentPosition(success, error);
+
+  function success(position) {
+    const lat = position.coords.latitude.toFixed(2);
+    const lon = position.coords.longitude.toFixed(2);
+
+    output.innerHTML = `Your location: ${lat}, ${lon}`;
+    radar.src = `https://radar.weather.gov/?center=${lat},${lon}&zoom=8`;
+    radar.style.display = 'block';
+  }
+
+  function error() {
+    output.innerHTML = 'Location access denied or unavailable.';
+  }
+}
+
+// Auto-load GPS radar on page load
+window.addEventListener('load', () => {
+  if (navigator.geolocation) {
+    getLocation();
+  }
+});
+</script>
+
+</body>
+</html>
